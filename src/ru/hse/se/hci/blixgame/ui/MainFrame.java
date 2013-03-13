@@ -146,8 +146,9 @@ public class MainFrame extends JFrame {
 		@Override
 		public void setSelectedItem(Object anItem) {
 			mSelection = anItem;
-			((Handler)anItem).handle();
 			index();
+			cleanInterface();			
+			((Handler)anItem).handle();
 			newGame();
 		}
 		
@@ -215,11 +216,14 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
-	void cleanup() {
+	void cleanInterface() {
 		if (mEffect != null) {
 			mEffect.cleanup();
 		}
-		
+		cleanup();
+	}
+	
+	void cleanup() {		
 		dumpStats();		
 		mScore = 0;
 	}

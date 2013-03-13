@@ -9,23 +9,23 @@ import java.awt.image.BufferedImage;
 import ru.hse.se.hci.blixgame.ui.GameDisplay;
 
 
-public class PartialVisibilityEffect implements PostEffect {
+public class PartialVisibilityEffect implements PostEffect,
+	MouseMotionListener
+{
 	GameDisplay mDisplay;
 	
 	public PartialVisibilityEffect(GameDisplay display) {
 		mDisplay = display;
-		
-		mDisplay.addMouseMotionListener(new MouseMotionListener() {
-			
-			@Override
-			public void mouseMoved(MouseEvent arg0) {
-				mDisplay.paintGame();
-			}
-			
-			@Override
-			public void mouseDragged(MouseEvent arg0) {}
-		});
+		mDisplay.addMouseMotionListener(this);
 	}
+	
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		mDisplay.paintGame();
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent arg0) {}
 	
 	@Override
 	public void process(BufferedImage image) {
@@ -48,5 +48,7 @@ public class PartialVisibilityEffect implements PostEffect {
 	}
 
 	@Override
-	public void cleanup() {}
+	public void cleanup() {
+		mDisplay.removeMouseMotionListener(this);
+	}
 }
