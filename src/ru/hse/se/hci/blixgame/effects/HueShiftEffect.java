@@ -1,4 +1,4 @@
-package effects;
+package ru.hse.se.hci.blixgame.effects;
 
 import java.awt.image.BufferedImage;
 

@@ -1,4 +1,4 @@
-package ui;
+package ru.hse.se.hci.blixgame.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -14,8 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ru.hse.se.hci.blixgame.GameModel;
-import view.Renderer;
-import effects.PostEffect;
+import ru.hse.se.hci.blixgame.effects.PostEffect;
+import ru.hse.se.hci.blixgame.view.Renderer;
 
 @SuppressWarnings({ "serial" })
 public class GameDisplay extends JPanel {

@@ -1,4 +1,4 @@
-package ui;
+package ru.hse.se.hci.blixgame.ui;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -22,12 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
 
 import ru.hse.se.hci.blixgame.GameModel;
-import view.CircleRenderer;
-import view.RectRenderer;
-import view.Renderer;
-import effects.HueShiftEffect;
-import effects.PartialVisibilityEffect;
-import effects.PostEffect;
+import ru.hse.se.hci.blixgame.effects.HueShiftEffect;
+import ru.hse.se.hci.blixgame.effects.PartialVisibilityEffect;
+import ru.hse.se.hci.blixgame.effects.PostEffect;
+import ru.hse.se.hci.blixgame.view.CircleRenderer;
+import ru.hse.se.hci.blixgame.view.RectRenderer;
+import ru.hse.se.hci.blixgame.view.Renderer;
 
 @SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class MainFrame extends JFrame {

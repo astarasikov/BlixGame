@@ -1,4 +1,4 @@
-package view;
+package ru.hse.se.hci.blixgame.view;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

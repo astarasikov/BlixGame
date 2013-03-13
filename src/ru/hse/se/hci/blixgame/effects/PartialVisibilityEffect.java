@@ -1,4 +1,4 @@
-package effects;
+package ru.hse.se.hci.blixgame.effects;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -6,7 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-import ui.GameDisplay;
+import ru.hse.se.hci.blixgame.ui.GameDisplay;
+
 
 public class PartialVisibilityEffect implements PostEffect {
 	GameDisplay mDisplay;
