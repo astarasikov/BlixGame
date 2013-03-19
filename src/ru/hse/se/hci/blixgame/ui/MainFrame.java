@@ -1,5 +1,9 @@
 package ru.hse.se.hci.blixgame.ui;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.DefaultFocusTraversalPolicy;
+import java.awt.FocusTraversalPolicy;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -333,6 +337,15 @@ public class MainFrame extends JFrame {
 		
 		add(controlPane, BorderLayout.NORTH);		
 	}
+	
+	FocusTraversalPolicy traversalPolicy = new 
+		DefaultFocusTraversalPolicy()
+	{
+		@Override
+		public Component getDefaultComponent(Container aContainer) {
+			return mGameDisplay;
+		}
+	};
 		
 	public MainFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -342,5 +355,6 @@ public class MainFrame extends JFrame {
 		add(mGameDisplay, BorderLayout.CENTER);
 		
 		setSize(500, 500);
+		setFocusTraversalPolicy(traversalPolicy);
 	}
 }
