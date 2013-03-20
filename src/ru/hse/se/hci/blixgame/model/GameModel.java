@@ -6,6 +6,7 @@ import java.util.Random;
 public class GameModel {
 	final Color mTiles[][];
 	final Color mColors[];
+	final boolean mFromFile;
 		
 	final public int numColumns;
 	final public int numRows;
@@ -17,25 +18,30 @@ public class GameModel {
 	int mMovesLeft = 0;
 	int mCurrentScore = 0;
 	
+	LevelGenerator mLevelGenerator;
+	
 	public Color tileAt(int row, int column) {
 		return mTiles[row][column];
 	}
 	
-	public GameModel() {
-		this(0, 0);
+	public GameModel(boolean fromFile) {
+		this(0, 0, fromFile);
 	}
 	
 	public GameModel nextLevel() {
-		return new GameModel(numLevel + 1, mCurrentScore);
+		return new GameModel(numLevel + 1, mCurrentScore, mFromFile);
 	}
 		
-	public GameModel(int level, int score) {
+	public GameModel(int level, int score, boolean fromFile) {
 		int columns = 10 + level;
 		int rows = 3 + level;
 		
 		numLevel = level;
 		numColumns = columns;
 		numRows = rows;
+		mFromFile = fromFile;
+
+		mLevelGenerator = new LevelGenerator(fromFile, rows, columns);
 		
 		int numColors = (int)(Math.log(columns + rows) / Math.log(2.0));
 		

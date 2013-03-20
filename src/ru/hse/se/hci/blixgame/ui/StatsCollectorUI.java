@@ -11,8 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import ru.hse.se.hci.blixgame.effects.HueShiftEffect;
+import ru.hse.se.hci.blixgame.effects.PartialVisibilityEffect;
 import ru.hse.se.hci.blixgame.effects.PostEffect;
 import ru.hse.se.hci.blixgame.model.GameModel;
+import ru.hse.se.hci.blixgame.view.CircleRenderer;
 import ru.hse.se.hci.blixgame.view.RectRenderer;
 import ru.hse.se.hci.blixgame.view.Renderer;
 
@@ -20,8 +23,9 @@ public class StatsCollectorUI
 	extends JFrame
 	implements GameStateCallback
 {
-	final static long TIMEOUT = (1000 * 60);
-	final static int MAX_LEVEL = 5;
+	final static long TIMEOUT = (1000 * 60 * 2);
+	final static int MAX_LEVEL = 3;
+	final static int MAX_UI = 5;
 	
 	String mUserName;
 	GameDisplay mGameDisplay = new GameDisplay(this);
@@ -33,7 +37,37 @@ public class StatsCollectorUI
 	
 	int mLastScore = 0;
 	int mAttemptCount = 0;
+	int mUiNum = 0;
 	long mTimeStart = 0;
+	
+	void setUI(int num) {
+		switch (num) {
+		case 0:
+			mRenderer = new RectRenderer();
+			mEffect = null;
+			break;
+		case 1:
+			mRenderer = new CircleRenderer();
+			mEffect = null;
+			break;
+		case 2:
+			mRenderer = new RectRenderer();
+			mEffect = new HueShiftEffect();
+			break;
+		case 3:
+			mRenderer = new CircleRenderer();
+			mEffect = new HueShiftEffect();
+			break;
+		case 4:
+			mRenderer = new RectRenderer();
+			mEffect = new PartialVisibilityEffect(mGameDisplay);
+			break;
+		case 5:
+			mRenderer = new CircleRenderer();
+			mEffect = new PartialVisibilityEffect(mGameDisplay);
+			break;
+		}
+	}
 	
 	void rearmTimer() {
 		if (mTimer != null) {
@@ -118,21 +152,32 @@ public class StatsCollectorUI
 	}
 	
 	void upgradeLevel() {
-		if (mGameModel.numLevel == MAX_LEVEL) {
+		if (mGameModel.numLevel == MAX_LEVEL && mUiNum == MAX_UI) {
 			mTimer.cancel();
 			mTimer.purge();
 			System.exit(0);
 		}
-		
-		mAttemptCount = 0;
-		mLastScore = mGameModel.score();
-		mGameModel = mGameModel.nextLevel();
+		else if (mGameModel.numLevel == MAX_LEVEL) {
+			mUiNum++;
+			setUI(mUiNum);
+			mAttemptCount = 0;
+			mLastScore = 0;
+			mGameModel = new GameModel(true);
+			mTimeStart = System.currentTimeMillis();
+		}
+		else {
+			mAttemptCount = 0;
+			mLastScore = mGameModel.score();
+			mGameModel = mGameModel.nextLevel();
+			mTimeStart = System.currentTimeMillis();
+		}
 	}
 	
 	void retryLevel() {
 		JOptionPane.showMessageDialog(null, "You lost, retrying");
 		mAttemptCount++;
-		mGameModel = new GameModel(mGameModel.numLevel, mLastScore); 
+		mGameModel = new GameModel(mGameModel.numLevel, mLastScore, true); 
+		mTimeStart = System.currentTimeMillis();
 	}
 	
 	TimerTask timerTask() {
@@ -160,11 +205,12 @@ public class StatsCollectorUI
 	public StatsCollectorUI() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getUserName();
-		mGameModel = new GameModel();
+		mGameModel = new GameModel(true);
 		updateGameDisplay();
 				
 		add(mScoreLabel, BorderLayout.NORTH);
 		add(mGameDisplay, BorderLayout.CENTER);
+		mTimeStart = System.currentTimeMillis();
 		gameStateChanged();
 		
 		rearmTimer();

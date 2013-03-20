@@ -34,13 +34,13 @@ import ru.hse.se.hci.blixgame.view.RectRenderer;
 import ru.hse.se.hci.blixgame.view.Renderer;
 
 @SuppressWarnings({ "serial", "rawtypes", "unchecked" })
-public class MainFrame
+public class FreePlayUI
 	extends JFrame
 	implements GameStateCallback
 {
 	/*
 	public static void main(String args[]) {
-		new MainFrame().setVisible(true);
+		new FreePlayUI().setVisible(true);
 	}
 	*/
 	
@@ -239,7 +239,7 @@ public class MainFrame
 	
 	void newGame() {
 		cleanup();
-		mGameModel = new GameModel();
+		mGameModel = new GameModel(false);
 		updateGameDisplay();
 		
 		mStartTime = System.currentTimeMillis();
@@ -351,7 +351,7 @@ public class MainFrame
 		}
 	};
 		
-	public MainFrame() {
+	public FreePlayUI() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		buildControls();
 		

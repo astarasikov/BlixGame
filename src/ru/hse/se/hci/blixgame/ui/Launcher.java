@@ -17,7 +17,7 @@ public class Launcher {
 			new StatsCollectorUI().setVisible(true);
 		}
 		else if (idx == 1) {
-			new MainFrame().setVisible(true);
+			new FreePlayUI().setVisible(true);
 		}
 		else {
 			System.exit(0);
