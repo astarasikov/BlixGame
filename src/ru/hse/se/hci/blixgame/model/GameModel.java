@@ -1,4 +1,4 @@
-package ru.hse.se.hci.blixgame;
+package ru.hse.se.hci.blixgame.model;
 import java.awt.Color;
 import java.util.Random;
 
@@ -9,6 +9,7 @@ public class GameModel {
 		
 	final public int numColumns;
 	final public int numRows;
+	final public int numLevel;
 	
 	final Random mRNG;
 	
@@ -20,7 +21,19 @@ public class GameModel {
 		return mTiles[row][column];
 	}
 	
-	public GameModel(int columns, int rows, int score) {
+	public GameModel() {
+		this(0, 0);
+	}
+	
+	public GameModel nextLevel() {
+		return new GameModel(numLevel + 1, mCurrentScore);
+	}
+		
+	public GameModel(int level, int score) {
+		int columns = 10 + level;
+		int rows = 3 + level;
+		
+		numLevel = level;
 		numColumns = columns;
 		numRows = rows;
 		

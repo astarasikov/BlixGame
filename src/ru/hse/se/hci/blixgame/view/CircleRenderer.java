@@ -3,7 +3,7 @@ package ru.hse.se.hci.blixgame.view;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ru.hse.se.hci.blixgame.GameModel;
+import ru.hse.se.hci.blixgame.model.GameModel;
 
 public class CircleRenderer implements Renderer {
 	boolean mFirstTime = true;

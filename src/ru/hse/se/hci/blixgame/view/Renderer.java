@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 
-import ru.hse.se.hci.blixgame.GameModel;
+import ru.hse.se.hci.blixgame.model.GameModel;
 
 
 public interface Renderer {

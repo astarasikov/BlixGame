@@ -13,13 +13,13 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import ru.hse.se.hci.blixgame.GameModel;
 import ru.hse.se.hci.blixgame.effects.PostEffect;
+import ru.hse.se.hci.blixgame.model.GameModel;
 import ru.hse.se.hci.blixgame.view.Renderer;
 
 @SuppressWarnings({ "serial" })
 public class GameDisplay extends JPanel {
-	MainFrame mMainFrame;
+	GameStateCallback mGameStateCallback;
 	
 	Renderer mRenderer;
 	GameModel mGameModel;
@@ -142,8 +142,8 @@ public class GameDisplay extends JPanel {
 		}
 	};
 	
-	public GameDisplay(MainFrame mainFrame) {
-		mMainFrame = mainFrame;
+	public GameDisplay(GameStateCallback mainFrame) {
+		mGameStateCallback = mainFrame;
 		addKeyListener(mKeyListener);
 		setLayout(new BorderLayout());
 		add(mDisplayPanel, BorderLayout.CENTER);
@@ -180,7 +180,7 @@ public class GameDisplay extends JPanel {
 	
 	void checkGameState() {
 		paintGame();
-		mMainFrame.gameStateChanged();
+		mGameStateCallback.gameStateChanged();
 	}
 	
 	boolean checkBuffers() {

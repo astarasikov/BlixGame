@@ -25,19 +25,24 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
 
-import ru.hse.se.hci.blixgame.GameModel;
 import ru.hse.se.hci.blixgame.effects.HueShiftEffect;
 import ru.hse.se.hci.blixgame.effects.PartialVisibilityEffect;
 import ru.hse.se.hci.blixgame.effects.PostEffect;
+import ru.hse.se.hci.blixgame.model.GameModel;
 import ru.hse.se.hci.blixgame.view.CircleRenderer;
 import ru.hse.se.hci.blixgame.view.RectRenderer;
 import ru.hse.se.hci.blixgame.view.Renderer;
 
 @SuppressWarnings({ "serial", "rawtypes", "unchecked" })
-public class MainFrame extends JFrame {
+public class MainFrame
+	extends JFrame
+	implements GameStateCallback
+{
+	/*
 	public static void main(String args[]) {
 		new MainFrame().setVisible(true);
 	}
+	*/
 	
 	JLabel mScoreLabel = new JLabel();
 	
@@ -234,12 +239,13 @@ public class MainFrame extends JFrame {
 	
 	void newGame() {
 		cleanup();
-		mGameModel = new GameModel(10, 3, 0);
+		mGameModel = new GameModel();
 		updateGameDisplay();
 		
 		mStartTime = System.currentTimeMillis();
 	}
 	
+	@Override
 	public void gameStateChanged() {
 		if (mGameModel.movesLeft() <= 0) {
 			JOptionPane.showMessageDialog(this, "You lost");
@@ -251,21 +257,19 @@ public class MainFrame extends JFrame {
 			mScoreLabel.setText(String.format("score %d | moves %d | level %d",
 					newScore,
 					mGameModel.movesLeft(),
-					mGameModel.numRows));
-			
+					mGameModel.numLevel));
 
 			//upgrade level with each 800 points
 			if (newScore - mScore > 800) {
 				mScore = newScore;
 
-				mGameModel = new GameModel(mGameModel.numColumns + 1,
-					mGameModel.numRows + 1, mGameModel.score());
+				mGameModel = mGameModel.nextLevel();
 				updateGameDisplay();
 			}
 		}
 	}
 	
-	void updateGameDisplay() {		
+	void updateGameDisplay() {
 		mGameDisplay.setGameModel(mGameModel);
 		mGameDisplay.setRenderer(mRenderer);
 		mGameDisplay.setEffect(mEffect);
